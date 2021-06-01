@@ -183,6 +183,10 @@ kubectl argo rollouts get rollout rollouts-demo
 
 此时 web 界面中会有黄色和蓝色会根据配置权重出现。
 
+灰度策略在执行到5%会暂停，之后验证通过后继续执行：
+
+![灰度过程](https://tva1.sinaimg.cn/large/008i3skNgy1gr2t8rccp4j31r50u04qp.jpg)
+
 ```bash
 $ kubectl argo rollouts get rollout rollouts-demo
 Name:            rollouts-demo
@@ -197,13 +201,15 @@ Images:          argoproj/rollouts-demo:yellow (canary)
                  argoproj/rollouts-demo:blue (stable)
 ```
 
-灰度策略在执行到5%会暂停，之后验证通过后继续执行：
+全部迁移新版本：
 
 ```bash
 kubectl argo rollouts promote rollouts-demo
 ```
 
 此时流量 100%迁移到新版本，web 界面中会有黄色 圆点
+
+![终态](https://tva1.sinaimg.cn/large/008i3skNgy1gr2t6cztdvj31q60u0qr5.jpg)
 
 此外，argo rollout 提供了一套简易的面板：
 
@@ -212,6 +218,7 @@ kubectl argo rollouts dashboard
 ```
 
 `localhost:3100` 即可打开。可以执行回滚和放行操作，省去命令行操作，但是没有用户管理权限，可以在测试环境使用。
+![dashboard](https://tva1.sinaimg.cn/large/008i3skNgy1gr2t444h26j31vr0u0qbt.jpg)
 
 ## 3. 总结
 
